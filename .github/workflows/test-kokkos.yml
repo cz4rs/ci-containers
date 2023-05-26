@@ -1,0 +1,33 @@
+name: Build and test Kokkos
+
+on:
+  workflow_call:
+    inputs:
+      dockerfile:
+        type: string
+      tag:
+        type: string
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/kokkos/ci-containers/${{ inputs.dockerfile }}:${{ inputs.tag }}
+    steps:
+      - name: Checkout kokkos
+        uses: actions/checkout@v3
+        with:
+          repository: kokkos/kokkos
+      - name: Configure Kokkos
+        run: |
+          cmake -B builddir \
+            -DKokkos_ENABLE_HWLOC=ON \
+            -DKokkos_ENABLE_BENCHMARKS=ON \
+            -DKokkos_ENABLE_EXAMPLES=ON \
+            -DKokkos_ENABLE_TESTS=ON
+      - name: Build
+        run: |
+          cmake --build builddir --parallel 2
+      - name: Tests
+        working-directory: builddir
+        run: ctest --output-on-failure
