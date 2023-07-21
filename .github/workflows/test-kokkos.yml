@@ -9,7 +9,7 @@ on:
         type: string
 
 jobs:
-  hello:
+  test-kokkos:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/kokkos/ci-containers/${{ inputs.dockerfile }}:${{ inputs.tag }}
