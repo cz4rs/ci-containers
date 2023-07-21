@@ -18,7 +18,7 @@ jobs:
             - {dockerfile: 'ubuntu',   tag: 'rolling',          build_args: 'TAG=rolling'}
             - {dockerfile: 'ubuntu',   tag: 'devel',            build_args: 'TAG=devel', continue-on-error: 'true'}
             - {dockerfile: 'opensuse', tag: 'latest'}
-            - {dockerfile: 'fedora',   tag: 'intel',            build_args: 'INTEL=yes', continue-on-error: 'true'}
+            - {dockerfile: 'fedora',   tag: 'intel',            build_args: 'TAG=37,INTEL=yes', continue-on-error: 'true'}
     uses: ./.github/workflows/build-and-push.yml
     with:
       continue-on-error: ${{ matrix.config.continue-on-error }}
