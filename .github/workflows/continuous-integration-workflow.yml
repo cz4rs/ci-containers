@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - test-kokkos
   pull_request:
     branches:
       - main
