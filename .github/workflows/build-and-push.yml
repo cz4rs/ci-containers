@@ -6,6 +6,8 @@ on:
         type: string
       build_args:
         type: string
+      cmake_args:
+        type: string
       dockerfile:
         type: string
       tag:
@@ -51,6 +53,7 @@ jobs:
           docker run -t --rm -v ${{ github.workspace }}/kokkos:/kokkos -w /kokkos ${{ env.test-tag }} \
             sh -c \
               "cmake -B builddir \
+                ${{ inputs.cmake_args }} \
                 -DKokkos_ENABLE_HWLOC=ON \
                 -DKokkos_ENABLE_BENCHMARKS=ON \
                 -DKokkos_ENABLE_EXAMPLES=ON \

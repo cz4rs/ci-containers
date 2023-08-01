@@ -19,10 +19,12 @@ jobs:
             - {dockerfile: 'ubuntu',   tag: 'rolling',  build_args: 'TAG=rolling'}
             - {dockerfile: 'ubuntu',   tag: 'devel',    build_args: 'TAG=devel',    continue-on-error: 'true'}
             - {dockerfile: 'opensuse', tag: 'latest'}
-            - {dockerfile: 'fedora',   tag: 'intel',    build_args: 'INTEL=yes',    continue-on-error: 'true'}
+            - {dockerfile: 'fedora',   tag: 'intel',    build_args: 'INTEL=yes',    cmake_args: '-DCMAKE_CXX_COMPILER=icpc',  continue-on-error: 'true'}
+            - {dockerfile: 'fedora',   tag: 'intel',    build_args: 'INTEL=yes',    cmake_args: '-DCMAKE_CXX_COMPILER=icpx',  continue-on-error: 'true'}
     uses: ./.github/workflows/build-and-push.yml
     with:
       continue-on-error: ${{ matrix.config.continue-on-error }}
       build_args: ${{ matrix.config.build_args }}
+      cmake_args: ${{ matrix.config.cmake_args }}
       dockerfile: ${{ matrix.config.dockerfile }}
       tag: ${{ matrix.config.tag }}
